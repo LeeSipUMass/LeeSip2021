@@ -4,6 +4,7 @@ library(ggplot2)
 library(plotly)
 
 #getting CCNA numbers and descriptors
+setwd("R Materials/")
 CCNA_description <- read.delim("CCNA_description.txt")
 
 #getting the kegg terms 
