@@ -1,3 +1,8 @@
+install.packages("ggplot2")
+install.packages("ploty")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("edgeR")
 				
 library(edgeR)
 library(ggplot2)
