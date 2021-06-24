@@ -16,7 +16,7 @@ PFCEP_orthologs <- rename(PFCEP_orthologs,
        Hum = "Human_(GRCh38.p13)_Gene_stable_ID", # human gene ID
        Chi = "Chimpanzee_(Pan_tro_3.0)_gene_stable_ID", 
        Gor = "Gorilla_(gorGor4)_gene_stable_ID"
-        ) %>% drop_na()
+        ) %>% distinct() %>% drop_na()
 dim(PFCEP_orthologs)
 
 # keep only 1:1 paralogs, then remove paralog columns
