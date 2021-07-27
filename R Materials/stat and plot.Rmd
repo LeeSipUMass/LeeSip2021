@@ -1,0 +1,61 @@
+---
+title: "stats_aov"
+output: html_notebook
+---
+
+```{r}
+#Install library readxl and tidyverse if you have not done so
+library(readxl)
+library(tidyr)
+stat <- read_xlsx('statistics.xlsx')
+#Q: could you compute the DW average of Fo47, Fo5176 and Mock? (data wrangling)
+```
+
+```{r}
+#ANOVA- Analysis of variance
+#Ask any significant difference between treaments
+res <- aov(formula = `DW (mg)` ~ Treatment,
+            data = stat)
+summary(res) 
+```
+
+```{r}
+#Pair-wise t-test
+pairwise.t.test(stat$`DW (mg)`, stat$Treatment, p.adjust.method = 'none')
+```
+
+```{r}
+#A simple plot
+library("ggplot2")
+stat %>% 
+  ggplot(aes(x = Treatment, y = `DW (mg)`)) +
+  geom_violin(aes(color = Treatment)) +
+  geom_dotplot(binaxis='y', stackdir='center', aes(color = Treatment))
+```
+
+
+```{r}
+#Modify your plot in your own way
+stat %>% 
+  ggplot(aes(x = Treatment, y = `DW (mg)`)) +
+  geom_violin(aes(color = Treatment)) +
+  geom_dotplot(binaxis='y', stackdir='center',
+               binwidth = 0.10, aes(color = Treatment)) +
+  theme(panel.grid.major =element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  xlab('Treatment')+
+  ylab('Shoot Dry Weight at 6 DPI (mg)') +
+  theme(legend.position="none") +
+  theme(axis.title.y = 
+        element_text(size = 18),
+        axis.title.x =
+        element_text(size = 20, color = 'gray')) +
+   theme(axis.text.x = 
+         element_text(vjust = 1,
+                      size = 22,
+                      color = 'black')) +
+    scale_y_continuous(breaks = c(0,1,2,3,4,5,6,7,8,9))
+```
+
